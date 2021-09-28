@@ -8,14 +8,13 @@ project 为根目录
 需要设置 GOPATH=xxx目录
 设置 GO111MODULE = auto
 
-1.  在项目根目录下  go mod init 模块名字
+1.  在项目根目录下  go mod init 模块名字  根目录下生成 go.mod 文件
 
-2.  根目录下生成 go.mod 文件
+2.  有依赖包包的情况下  执行main.go 会自动拉取包  并生成 go.sum文件 包会被拉取到 GOPATH/pkg/mod缓存下
 
-3.  有依赖包包的情况下  执行main.go 会自动拉取包  并生成 go.sum文件 包会被拉取到 GOPATH/pkg/mod缓存下
+3.  go mod vendor  会在根目录生成vendor目录 并把GOPATH/pkg/mod下的包的包复制过来
 
-4.  go mod vendor  会在根目录生成vendor目录 并把GOPATH/pkg/mod下的包的包复制过来
-
+4. 引入本地包 （go mod init 模块名字）  引入这个名字下的包 模块名字/xxx包
 
 go.mod 升级包的版本，步骤：
 
