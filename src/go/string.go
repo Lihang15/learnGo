@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"go/module"
 )
 
 func main() {
@@ -12,4 +13,5 @@ func main() {
 		fmt.Println(value)
 	}
 	//fmt.Print("xx" + strconv.Itoa(3) + str)
+	fmt.Print(module.GetName())
 }
