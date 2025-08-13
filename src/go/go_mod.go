@@ -1,22 +1,43 @@
 
-配置go mod
 
-mkdir project 
-cd project
-project 为根目录
+一，go 语言本地包如何相互引用
+以a.go 引入b.go 中Helloworld方法为例子,函数名字大写其他文件才可用
+project/main/a.go
+            /b.go
+		/mypkg/c.go
+		go.mod
+		go.sum	
 
-需要设置 GOPATH=xxx目录
-设置 GO111MODULE = auto
+文件夹名字就是包的名字 a.go的内容头 就是package main
 
-1.  在项目根目录下  go mod init 模块名字  根目录下生成 go.mod 文件
+a.go 和b.go 在同一个文件夹下，a里面吗可以直接执行Helloworld()函数，不用import
 
-2.  有依赖包包的情况下  执行main.go 会自动拉取包  并生成 go.sum文件 包会被拉取到 GOPATH/pkg/mod缓存下
+a.go 和c.go  
+
+a.go
+package main
+
+import "project/mypkg"
+
+func main() {
+    mypkg.Hello() // 调用另一个包里的函数
+}
+
+
+
+
+二，配置go mod  用于管理和使用别人写好的三方依赖包
+
+
+1.  在项目根目录下  go mod init 模块名字  根目录下生成 go.mod 文件    如果你的项目作为三方包给别人用，通过这个模块名字引入
+
+2.  有依赖包包的情况下  执行main.go 会自动拉取包  并生成 go.sum文件 包会被拉取到go默认路径下缓存
 
 3.  go mod vendor  会在根目录生成vendor目录 并把GOPATH/pkg/mod下的包的包复制过来
 
-4. 引入本地包 （go mod init 模块名字）  引入这个名字下的包 模块名字/xxx包
 
-go.mod 升级包的版本，步骤：
+
+三，go.mod 升级包的版本，步骤：
 
 直接修改 go.mod 中包的版本，GoLand 会自动下载和更新包
 可以执行命令：go mod tidy，会根据代码里引用的包，自动进行包的整理
